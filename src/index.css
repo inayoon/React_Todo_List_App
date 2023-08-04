@@ -19,6 +19,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
+  accent-color: var(--color-accent);
   background: rgb(81,87,111);
   background: linear-gradient(
     106deg,
@@ -57,4 +58,5 @@ button{
   outline: none;
   border : none;
 }
+
 
