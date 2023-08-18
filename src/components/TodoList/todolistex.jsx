@@ -7,6 +7,7 @@ export default function todolistex() {
     { id :'123', text: '장보기', status: 'active'},
     { id :'124', text: '준보기', status: 'active'},
   ]);
+  const handleAdd =(todo) => setTodos([...todos, todo])
   return (
     <section>
       <ul>
@@ -14,7 +15,7 @@ export default function todolistex() {
           <li key={item.id}>{item.text}</li>
         ))}
       </ul>
-      <Addtodoex />
+      <Addtodoex onAdd={handleAdd}/>
     </section>
   )
 }
