@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# React_Todo_List_App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+ <img src="https://github.com/inayoon/react_todo/assets/100747899/ce2f870b-18a7-4a98-9e4d-5a46a4372c57">
 
-In the project directory, you can run:
 
-### `npm start`
+ ## `Goals` of this project
+ - Break down React components into smaller, reusable parts
+ - Focus on practicing React Hooks - useState, useContext for dark mode, useEffect
+ - Utilize PostCSS to modularize and structure CSS for improved maintainability
+ - Implement data storage using window.localStorage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+ ## `Fetures` of this project
 
-### `npm test`
+ ###  -Breaking down React components into smaller parts
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ <img width="503" alt="app" src="https://github.com/inayoon/react_todo/assets/100747899/09533e98-79ab-4391-8ca0-90a8dfa0fe46">
 
-### `npm run build`
+<br/>
+ <img width="500" alt="todoList" src="https://github.com/inayoon/react_todo/assets/100747899/76670e1f-a940-40d1-9d34-bde0dff8c8ff">
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ <br/>
+ <img width="449" alt="breakdown" src="https://github.com/inayoon/react_todo/assets/100747899/3ef823bb-662a-4c8a-ab9e-7e016cf2ba69">
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br/><br/>
+ ### -React Hooks - useState, `useContext for dark mode`, useEffect       
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<img width="600" alt="dark" src="https://github.com/inayoon/react_todo/assets/100747899/8fd8d2e6-85a8-4a2b-8b19-36d6314978dd">
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br/>
+<img width="600" alt="bright" src="https://github.com/inayoon/react_todo/assets/100747899/e3ad14df-dcd7-4272-aef1-7f965f953513">
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+ 
+ - Create a new file and establish a context.
+ - Encapsulate child components within the context provider and provide the state value.
+ - Leverage the useContext hook within a child component.
+ <br/> <br/>
 
-## Learn More
+```JavaScript
+ //DarkModeContext.jsx
+import { createContext, useState, useContext, useEffect } from 'react';
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+const DarkModeContext = createContext();
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+export function DarkModeProvider ({children}){
+  const [darkMode, setDarkMode] = useState(false);
+  const toggleDarkMode = () =>{
+    setDarkMode(!darkMode);
+    
+    updateDarkMode(!darkMode)
+  }
+  useEffect(()=> {
+    const isDark = 
+      localStorage.theme === 'dark' || 
+      (!('theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches);
+    setDarkMode(isDark);
+    updateDarkMode(isDark);
+  }, []);
+  return(
+    <DarkModeContext.Provider value={{ darkMode, toggleDarkMode }}>
+      {children}
+    </DarkModeContext.Provider>
+  );
+}
+function updateDarkMode(darkMode) {
+  if(darkMode){
+    document.documentElement.classList.add('dark');
+    localStorage.theme = 'dark' 
+  }else{
+    document.documentElement.classList.remove('dark');
+    localStorage.theme = 'light' 
+  }
+}
 
-### Code Splitting
+export const useDarkMode = () => useContext(DarkModeContext);
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+ <br/> <br/>
+ ### -PostCSS to modularize and structure CSS for improved maintainability
+<img width="144" alt="postcss" src="https://github.com/inayoon/React_Todo_List_App/assets/100747899/25fbb2c1-4cf8-4f43-997c-515ff3d1c701">
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ - Organizing the PostCSS files within the same folder as the components facilitates ease of maintenance <br/> <br/>
